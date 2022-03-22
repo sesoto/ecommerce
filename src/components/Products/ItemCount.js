@@ -23,7 +23,7 @@ function ItemCount({ stock, initial, onAdd }) {
             <div>{count}</div>
             <button onClick={removeStock} disabled={count <= 0}><RemoveIcon /></button>
             <div>
-                <button onClick={onAdd} disabled={count < 1} > Comprar </button>              
+                <button onClick={onAdd(count)} disabled={count < 1} > Comprar </button>              
             </div>
 
         </div>
