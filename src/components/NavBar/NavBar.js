@@ -12,9 +12,30 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import CartWidget from '../CartWidget/CartWidget';
+import { Link } from 'react-router-dom';
+import '../../../src/App.css';
 
-const pages = ['Home', 'Productos', 'Nosotros', 'Contacto'];
+// const pages = ['Home', 'Productos', 'Nosotros', 'Contacto'];
 const settings = ['Perfil', 'Cuenta',  'Salir'];
+
+const pages = [
+  {
+    title:'Home',
+    url:'/'
+  }, 
+  {
+    title:'Productos',
+    url:'/productos'
+  },
+  {
+    title:'Nosotros',
+    url:'/nosotros'
+  },
+  {
+    title:'Contacto',
+    url:'/contacto'
+  }
+];
 
 const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -45,7 +66,7 @@ const NavBar = () => {
             component="div"
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
           >
-            RELAX CAT
+            <Link to={'/'} className="App-link">RELAX CAT</Link>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -78,8 +99,8 @@ const NavBar = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem key={page.title} onClick={handleCloseNavMenu} to="/profile">
+                  <Typography textAlign="center">{page.title}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -95,12 +116,12 @@ const NavBar = () => {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
-                key={page}
+                key={page.title}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
+                sx={{ my: 2, color: 'white', display: 'block',  textDecoration:'none'}}>
+                <Link to={page.url} className="App-link">{page.title}</Link>
               </Button>
+
             ))}
           </Box>
 

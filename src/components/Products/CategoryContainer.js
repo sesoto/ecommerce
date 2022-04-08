@@ -6,8 +6,10 @@ import * as React from 'react';
 import Grid from '@mui/material/Grid';
 
 
-const ItemListContainer = () => {
+const CategoryContainer = ( categorySelect ) => {
 
+    const category = categorySelect.category
+    
     const [spacing, setSpacing] = React.useState(2);
 
     const handleChange = (event) => {
@@ -17,22 +19,28 @@ const ItemListContainer = () => {
     const [items, setItems] = useState([])
     const [isLoading, setLoading] = useState(true)
 
-    // const {title,price,size,stock} = props
-    // const onAdd = (count) => { console.log(`Agregaste ${count} productos al carrito.`) }
-
     const getProducts = () => new Promise((resolve, reject) => {
             return setTimeout( () => {
                 resolve(Products);
         }, 2000);
     }); 
 
+    const filterProductByCategory = (array , category) => {
+        console.log(category)
+        return array.map( (product, i) => {
+            if(product.category == category) {
+               return setItems(products => [...products, product]);
+            }
+        })
+    }
 
     useEffect( () => {
         setLoading(true)
         getProducts().then( (items) => {
-            setItems(items)
+            setItems([])
         }).finally( () => {
             setLoading(false)
+            category ? filterProductByCategory(Products, category) : setItems(Products)
         })
     }, [])
 
@@ -52,4 +60,4 @@ const ItemListContainer = () => {
             ))
 }
 
-export default ItemListContainer
+export default CategoryContainer
