@@ -1,8 +1,18 @@
-import React from "react"
+import React from "react";
+import ItemCount from "./ItemCount";
+import { useState } from "react";
+import { Link } from 'react-router-dom';
 
 function ItemDetail({ item }) {
     
-    const { id, title, description, price, pictureUrl } = item
+    const { id, title, description, price, pictureUrl, stock } = item
+    const [goToCart, setGoToCart] = useState(false)
+
+    // Agregar al carrito
+    const onAdd = (quantity) => {
+        setGoToCart(true)
+        console.log("Cantidad:",quantity)
+    }
 
     return(
         <div className="card-item">
@@ -11,10 +21,19 @@ function ItemDetail({ item }) {
             <p> {description} </p>
             <p>Precio : {price} </p>
             <img src={`../img/${pictureUrl}`} alt={pictureUrl} width="500"/>
-            {console.log(`./img/${pictureUrl}`)}
+
+            {!goToCart 
+            ?
             <div>
-                <button> Comprar </button>              
+                <ItemCount stock={stock} initial={1} onAdd={onAdd}/>
             </div>
+            :
+            <div>
+                <Link to={`/carrito`}> 
+                    <button> Ir al carrito </button>   
+                </Link>           
+            </div>    
+            }
         </div>
     ) 
    }

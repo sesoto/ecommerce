@@ -6,26 +6,24 @@ function ItemCount({ stock, initial, onAdd }) {
 
     const [count, setCount] = useState(parseInt(initial));
 
-    const addStock = () => {
+
+    const addStock = (e) => {
         setCount(count + 1);
       };
     
-      const removeStock = () => {
+      const removeStock = (e) => {
+
         setCount(count - 1);
       };
 
     return(
         <div className="card-item">
-            <h2>Remera</h2>
-            <p>Precio : 100</p>
-            <p>Talle : XL</p>
             <button onClick={addStock} disabled={count >= stock}><AddIcon /></button> 
             <div>{count}</div>
             <button onClick={removeStock} disabled={count <= 0}><RemoveIcon /></button>
             <div>
-                <button onClick={onAdd(count)} disabled={count < 1} > Comprar </button>              
+                <button onClick={()=> onAdd(count)} disabled={count < 1} > Agregar al carrito </button>              
             </div>
-
         </div>
     )  
 }
