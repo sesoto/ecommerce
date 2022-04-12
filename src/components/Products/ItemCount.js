@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-
+import CartContext from "../../context/CartContext";
 function ItemCount({ stock, initial, onAdd }) {
 
     const [count, setCount] = useState(parseInt(initial));
-
+    const { addProductToCart, cartProducts } = useContext(CartContext)
 
     const addStock = (e) => {
         setCount(count + 1);

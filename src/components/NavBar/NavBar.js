@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useContext } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,9 +15,12 @@ import MenuItem from '@mui/material/MenuItem';
 import CartWidget from '../CartWidget/CartWidget';
 import { Link } from 'react-router-dom';
 import '../../../src/App.css';
+import CartContext from '../../context/CartContext';
+
 
 // const pages = ['Home', 'Productos', 'Nosotros', 'Contacto'];
 const settings = ['Perfil', 'Cuenta',  'Salir'];
+
 
 const pages = [
   {
@@ -40,6 +44,7 @@ const pages = [
 const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const { cartProducts } = useContext(CartContext);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -55,6 +60,8 @@ const NavBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  // console.log("Desde el contexto: ",cartProducts);
 
   return (
     <AppBar position="static">
@@ -126,7 +133,7 @@ const NavBar = () => {
           </Box>
 
           <Box>
-              <CartWidget />
+              <CartWidget /> { cartProducts.length }
           </Box>
 
           {/* <Box sx={{ flexGrow: 0 }}>
