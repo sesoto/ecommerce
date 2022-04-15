@@ -2,9 +2,10 @@ import React from "react";
 import { useContext } from 'react';
 import '../../src/App.css';
 import CartContext from "../context/CartContext";
+import { Link } from 'react-router-dom';
 
 const CartPage = () => {
-    const { addProductToCart, cartProducts, removeItem, clear } = useContext(CartContext)
+    const { addProductToCart, cartProducts, removeItem, clear, totalCart, cantCart } = useContext(CartContext)
     
     return(
         cartProducts.length > 0 ? (
@@ -29,6 +30,18 @@ const CartPage = () => {
                     </div>
             
                 ))} 
+                
+                <div>
+                    <h4> Cantidad de Líneas de Productos: { cartProducts.length } </h4>
+                </div>
+                
+                <div>
+                    <h4> Cantidad Total de Productos: { cantCart() } </h4>
+                </div>
+
+                <div>
+                    <h2> Total: $ { totalCart() } </h2>
+                </div>
 
                 <div>
                     <button className="btn btn-danger" onClick={clear}>Vaciar carrito</button>
@@ -39,6 +52,9 @@ const CartPage = () => {
                 <div>
                     <h1> Carrito </h1>
                     <h3> No hay productos en el carrito </h3>
+                    <Link to={`/productos`}>   
+                        <button> Ir a Productos </button>  
+                    </Link>
                 </div>
             )
     );

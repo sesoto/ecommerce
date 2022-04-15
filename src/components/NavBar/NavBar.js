@@ -16,7 +16,8 @@ import CartWidget from '../CartWidget/CartWidget';
 import { Link } from 'react-router-dom';
 import '../../../src/App.css';
 import CartContext from '../../context/CartContext';
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import Divider from '@mui/material/Divider';
 
 // const pages = ['Home', 'Productos', 'Nosotros', 'Contacto'];
 const settings = ['Perfil', 'Cuenta',  'Salir'];
@@ -44,7 +45,7 @@ const pages = [
 const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const { cartProducts } = useContext(CartContext);
+  const { cartProducts, cantCart } = useContext(CartContext);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -131,40 +132,56 @@ const NavBar = () => {
 
             ))}
           </Box>
+          
+            <Box sx={{ flexGrow: 0 }}>
 
-          <Box>
-              <CartWidget /> { cartProducts.length }
-          </Box>
+              <Tooltip title="Carrito de Compras">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
+                  <CartWidget />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+  
+                {cartProducts.map( (cartProduct) => {
+                      return(
+                          <MenuItem key={cartProduct.id}>
+                              <div>
+                                  <img src={`../img/${cartProduct.pictureUrl}`} width="30"/> 
+                              </div>
+                              <div>
+                                  <p>{cartProduct.title}</p>
+                                  <span>$ {cartProduct.price}</span>
+                              </div>
+                              <div>
+                                  <DeleteIcon />
+                              </div>
+                          </MenuItem>
+                      )
+                  })}   
 
-          {/* <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box> */}
+
+
+
+              </Menu>
+            </Box>
+
+
         </Toolbar>
       </Container>
     </AppBar>

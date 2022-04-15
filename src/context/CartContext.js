@@ -40,11 +40,22 @@ const CartProvider = ({children}) => {
         return cartProducts.find(cartProduct => cartProduct.id === id)
     }
 
+    const totalCart = () => {
+        return cartProducts.reduce((acum, item) => acum = acum + (item.price * item.quantity), 0)
+
+    }
+
+    const cantCart = () => {
+        return cartProducts.reduce((acum, item) => acum += item.quantity, 0)
+    }
+
     const data = {
         cartProducts,
         addProductToCart,
         removeItem,
-        clear
+        clear,
+        totalCart,
+        cantCart
     }
 
     return(

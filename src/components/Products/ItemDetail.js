@@ -19,12 +19,12 @@ function ItemDetail({ item }) {
     }
 
     return(
-        <div className="card-item">
+        <div>
             <p> {id} </p>
             <h2> {title} </h2>
             <p> {description} </p>
             <p>Precio : {price} </p>
-            <img src={`../img/${pictureUrl}`} alt={pictureUrl} width="500"/>
+            <img src={`../img/${pictureUrl}`} alt={pictureUrl} width="300"/>
 
             {!goToCart 
             ?
@@ -34,7 +34,7 @@ function ItemDetail({ item }) {
             :
             <div>
                 <Link to={`/carrito`}> 
-                    <button> Ir al carrito </button>   
+                    <button> Terminar mi compra </button>   
                 </Link>    
 
                 <Link to={`/productos`}>   

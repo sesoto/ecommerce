@@ -4,7 +4,7 @@ import ItemList from './ItemList'
 import Products from '../../utils/productsMock';
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
-
+import CircularProgress from '@mui/material/CircularProgress';
 
 const ItemListContainer = () => {
 
@@ -39,7 +39,7 @@ const ItemListContainer = () => {
     return (
          isLoading ? (
             <div> 
-                Cargando..
+                <CircularProgress />
             </div> ) 
             : (
                 <Grid sx={{ flexGrow: 1 }} container spacing={4}>
