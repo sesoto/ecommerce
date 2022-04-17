@@ -1,6 +1,5 @@
 import React from "react";
 import ItemListContainer from '../components/Products/ItemListContainer';
-import ItemDetailContainer from '../components/Products/ItemDetailContainer';
 import '../../src/App.css';
 
 

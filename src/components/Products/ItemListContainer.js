@@ -5,6 +5,8 @@ import Products from '../../utils/productsMock';
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import CircularProgress from '@mui/material/CircularProgress';
+import { collection, getDocs } from 'firebase/firestore';
+import db from '../../firebase';
 
 const ItemListContainer = () => {
 
@@ -17,15 +19,26 @@ const ItemListContainer = () => {
     const [items, setItems] = useState([])
     const [isLoading, setLoading] = useState(true)
 
-    // const {title,price,size,stock} = props
-    // const onAdd = (count) => { console.log(`Agregaste ${count} productos al carrito.`) }
+    // const getProducts = () => new Promise((resolve, reject) => {
+    //         return setTimeout( () => {
+    //             resolve(Products);
+    //     }, 2000);
+    // }); 
 
-    const getProducts = () => new Promise((resolve, reject) => {
-            return setTimeout( () => {
-                resolve(Products);
-        }, 2000);
-    }); 
+    const getProducts = async() => {
+        const itemsCollection = collection(db, 'products')
+        const productsSnapshot = await getDocs(itemsCollection)
 
+        const Products = productsSnapshot.docs.map( (doc)=> {
+            console.log(doc.id)
+            console.log(doc.data())
+            let product = doc.data()
+            product.id = doc.id
+            console.log("producto: ", product)
+            return product
+        })
+        return Products
+    }
 
     useEffect( () => {
         setLoading(true)

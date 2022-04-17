@@ -5,6 +5,8 @@ import Products from '../../utils/productsMock';
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import CircularProgress from '@mui/material/CircularProgress';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import db from '../../firebase';
 
 const CategoryContainer = ( categorySelect ) => {
 
@@ -19,28 +21,44 @@ const CategoryContainer = ( categorySelect ) => {
     const [items, setItems] = useState([])
     const [isLoading, setLoading] = useState(true)
 
-    const getProducts = () => new Promise((resolve, reject) => {
-            return setTimeout( () => {
-                resolve(Products);
-        }, 2000);
-    }); 
+    // const getProducts = () => new Promise((resolve, reject) => {
+    //         return setTimeout( () => {
+    //             resolve(Products);
+    //     }, 2000);
+    // }); 
 
-    const filterProductByCategory = (array , category) => {
-        console.log(category)
-        return array.map( (product, i) => {
-            if(product.category == category) {
-               return setItems(products => [...products, product]);
-            }
+    const getProducts = async() => {
+        // const itemsCollection = collection(db, 'products')
+        const itemsCollection = query(collection(db, 'products'), where("category","==",category))
+        const productsSnapshot = await getDocs(itemsCollection)
+
+        const Products = productsSnapshot.docs.map( (doc)=> {
+            console.log(doc.id)
+            console.log(doc.data())
+            let product = doc.data()
+            product.id = doc.id
+            console.log("producto: ", product)
+            return product
         })
+        return Products
     }
+
+    // const filterProductByCategory = (array , category) => {
+    //     console.log(category)
+    //     return array.map( (product, i) => {
+    //         if(product.category == category) {
+    //            return setItems(products => [...products, product]);
+    //         }
+    //     })
+    // }
 
     useEffect( () => {
         setLoading(true)
         getProducts().then( (items) => {
-            setItems([])
+            setItems(items)
         }).finally( () => {
             setLoading(false)
-            category ? filterProductByCategory(Products, category) : setItems(Products)
+            // category ? filterProductByCategory(Products, category) : setItems(Products)
         })
     }, [])
 

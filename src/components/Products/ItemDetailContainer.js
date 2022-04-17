@@ -3,6 +3,8 @@ import ItemDetail from './ItemDetail'
 import Products from '../../utils/productsMock'
 import * as React from 'react';
 
+// Ya no se usa
+
 function ItemDetailContainer() {
     
     const [Items, setItems] = useState({})

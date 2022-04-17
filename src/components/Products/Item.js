@@ -8,16 +8,35 @@ import Typography from '@mui/material/Typography';
 import ButtonBase from '@mui/material/ButtonBase';
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
+// import { useState, useEffect } from 'react'
+// import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Item ({ item }) {
     const { id, title, price, pictureUrl } = item
-    
+    // const [isLoading, setLoading] = useState(true)
+
     const Img = styled('img')({
         margin: 'auto',
         display: 'block',
         maxWidth: '100%',
         maxHeight: '100%',
       });
+
+    //   const getItems = () => new Promise((resolve, reject) => {
+    //     return setTimeout( () => {
+    //         //resolve(MockItem);
+    //         resolve(true);
+    //         }, 2000);
+    //     });
+
+    //     useEffect( () => {
+    //         setLoading(true)
+    //         getItems().then( () => {
+    //             console.log("Termino")
+    //         }).finally( () => {
+    //             setLoading(false)
+    //         })
+    //     }, [])
 
     return (
       <Box sx={{ minWidth: 275 }}>
