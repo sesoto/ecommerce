@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -18,34 +18,14 @@ import '../../../src/App.css';
 import CartContext from '../../context/CartContext';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Divider from '@mui/material/Divider';
-
-// const pages = ['Home', 'Productos', 'Nosotros', 'Contacto'];
-const settings = ['Perfil', 'Cuenta',  'Salir'];
-
-
-const pages = [
-  {
-    title:'Home',
-    url:'/'
-  }, 
-  {
-    title:'Productos',
-    url:'/productos'
-  },
-  {
-    title:'Nosotros',
-    url:'/nosotros'
-  },
-  {
-    title:'Contacto',
-    url:'/contacto'
-  }
-];
+import { collection, getDocs } from 'firebase/firestore';
+import db from '../../firebase';
 
 const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const { cartProducts, cantCart } = useContext(CartContext);
+  const [pages, setPages] = useState([]);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -62,7 +42,22 @@ const NavBar = () => {
     setAnchorElUser(null);
   };
 
+  const getRoutes = async() => {
+    const routesCollection = collection(db, 'routes')
+    const routesSnapshot = await getDocs(routesCollection)
+  
+    const pagesList = routesSnapshot.docs.map( (doc)=> {
+        console.log(doc.data())
+        return doc.data()
+    })
+    console.log(pagesList)
+    setPages(pagesList)
+  }
+
   // console.log("Desde el contexto: ",cartProducts);
+  useEffect( () => {
+    getRoutes()
+  }, [])
 
   return (
     <AppBar position="static">
