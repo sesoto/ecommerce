@@ -102,8 +102,9 @@ const NavBar = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page.title} onClick={handleCloseNavMenu} to="/profile">
-                  <Typography textAlign="center">{page.title}</Typography>
+                <MenuItem key={page.title} onClick={handleCloseNavMenu} to={page.url}>
+                  {/* <Typography textAlign="center">{page.title}</Typography> */}
+                  <Link to={page.url} className="App-link">{page.title.toUpperCase()}</Link>
                 </MenuItem>
               ))}
             </Menu>
@@ -122,7 +123,7 @@ const NavBar = () => {
                 key={page.title}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block',  textDecoration:'none'}}>
-                <Link to={page.url} className="App-link">{page.title}</Link>
+                <Link to={page.url} className="App-link">{page.title.toUpperCase()}</Link>
               </Button>
 
             ))}
