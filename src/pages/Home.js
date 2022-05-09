@@ -1,15 +1,17 @@
 import React from "react";
 import ItemListContainer from '../components/Products/ItemListContainer';
-import '../../src/App.css';
-
+import Footer from "../components/layout/Footer";
 
 const HomePage = () => {
     return(
-        <div className="App">
+        <>
+        <div>
             <h1> Home </h1>
             <ItemListContainer />
+            <Footer />
         </div>
 
+</>
     );
 }
 

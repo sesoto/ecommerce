@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react'
-import ItemCount from './ItemCount';
 import ItemList from './ItemList'
-import Products from '../../utils/productsMock';
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -19,22 +17,13 @@ const ItemListContainer = () => {
     const [items, setItems] = useState([])
     const [isLoading, setLoading] = useState(true)
 
-    // const getProducts = () => new Promise((resolve, reject) => {
-    //         return setTimeout( () => {
-    //             resolve(Products);
-    //     }, 2000);
-    // }); 
-
     const getProducts = async() => {
         const itemsCollection = collection(db, 'products')
         const productsSnapshot = await getDocs(itemsCollection)
 
         const Products = productsSnapshot.docs.map( (doc)=> {
-            console.log(doc.id)
-            console.log(doc.data())
             let product = doc.data()
             product.id = doc.id
-            console.log("producto: ", product)
             return product
         })
         return Products
@@ -55,7 +44,7 @@ const ItemListContainer = () => {
                 <CircularProgress />
             </div> ) 
             : (
-                <Grid sx={{ flexGrow: 1 }} container spacing={4}>
+                <Grid>
                     <Grid item xs={12}>
                         <Grid container justifyContent="center" spacing={spacing}>
                             <ItemList items={items} />

@@ -8,68 +8,55 @@ import Typography from '@mui/material/Typography';
 import ButtonBase from '@mui/material/ButtonBase';
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
-// import { useState, useEffect } from 'react'
-// import CircularProgress from '@mui/material/CircularProgress';
+import { purple } from '@mui/material/colors';
+
+const ColorButton = styled(Button)(({ theme }) => ({
+    color: theme.palette.getContrastText(purple[500]),
+    backgroundColor: purple[500],
+    '&:hover': {
+      backgroundColor: purple[700],
+    },
+  }));
 
 export default function Item ({ item }) {
     const { id, title, price, pictureUrl } = item
-    // const [isLoading, setLoading] = useState(true)
 
     const Img = styled('img')({
         margin: 'auto',
         display: 'block',
         maxWidth: '100%',
         maxHeight: '100%',
+        minWidth: '100%',
+        minHeight: '100%',
       });
 
-    //   const getItems = () => new Promise((resolve, reject) => {
-    //     return setTimeout( () => {
-    //         //resolve(MockItem);
-    //         resolve(true);
-    //         }, 2000);
-    //     });
-
-    //     useEffect( () => {
-    //         setLoading(true)
-    //         getItems().then( () => {
-    //             console.log("Termino")
-    //         }).finally( () => {
-    //             setLoading(false)
-    //         })
-    //     }, [])
-
     return (
-      <Box sx={{ minWidth: 275 }}>
-        <Card variant="outlined">
+      <Box sx={{ minWidth: 300, minHeight: 500}}>
+        <Card variant="outlined" sx={{ maxWidth: 300, maxHeight: 450, minHeight: 450 }}>
             <React.Fragment>
                 <CardContent>
-                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                        ID {id}
-                    </Typography>
-
-                    <Typography variant="h5" component="div">
+                    <ButtonBase sx={{ width: 250, height: 250 }} href={`/productos/${id}`}>
+                        <Img alt="complex" src={`../img/${pictureUrl}`} />
+                    </ButtonBase>
+                    <Typography variant="h6" component="div" sx={{ minWidth: 100, minHeight: 65 }}>
                         { title }
                     </Typography>
 
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
                         $ { price }
                     </Typography>
-
-                    {/* <Typography variant="body2">
-                        well meaning and kindly.
-                        <br />
-                        {'"a benevolent smile"'}
-                    </Typography> */}
-                    
-                    <ButtonBase sx={{ width: 128, height: 128 }}>
-                        <Img alt="complex" src={`../img/${pictureUrl}`} />
-                    </ButtonBase>
                 </CardContent>
 
-                <CardActions>
-                    <Link to={`/productos/${id}`}>
-                        <Button size="small">Ver</Button>
-                    </Link>
+                <CardActions style={{ display:'flex', justifyContent:'center' }}>
+                <Link to={`/productos/${id}`} style={{ textDecoration: 'none' }}>
+                    <ColorButton 
+                      variant='outlined'
+                      color='secondary'
+                      disableElevation
+                      fullWidth>
+                      Ver
+                    </ColorButton >
+                </Link>    
                 </CardActions>
             </React.Fragment>
         </Card>

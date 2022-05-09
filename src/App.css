@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  /* background-image: linear-gradient( 65.9deg,  rgba(85,228,224,1) 5.5%, rgba(75,68,224,0.74) 54.2%, rgba(64,198,238,1) 55.2%, rgba(177,36,224,1) 98.4% ); */
 }
 
 .App-logo {
@@ -24,10 +25,6 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -37,8 +34,7 @@
   }
 }
 
-.card-item {
-  display: flex;
-  justify-content:center;
-  /* width: 100px; */
+.img-header {
+  max-width: 30%;
+  max-height: 30%;
 }

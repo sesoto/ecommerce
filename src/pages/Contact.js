@@ -1,11 +1,11 @@
 import React from "react";
-import '../../src/App.css';
-
+import Footer from '../components/layout/Footer';
 
 const ContactPage = () => {
     return(
-        <div className="App">
+        <div>
             <h1> Contacto </h1>
+            <Footer />
         </div>
 
     );

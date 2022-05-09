@@ -5,25 +5,37 @@ import { Link } from 'react-router-dom';
 import CartContext from "../../context/CartContext";
 import { useEffect } from 'react'
 import CircularProgress from '@mui/material/CircularProgress';
+import {Paper, Box, CardMedia, Typography, Grid, Button} from '@mui/material'
+import { styled } from '@mui/material/styles';
+import { purple } from '@mui/material/colors';
+  
+const ColorButton = styled(Button)(({ theme }) => ({
+    color: theme.palette.getContrastText(purple[500]),
+    backgroundColor: purple[500],
+    '&:hover': {
+        backgroundColor: purple[700],
+    },
+}));
 
 function ItemDetail({ item }) {
-    
-    const { id, title, description, price, pictureUrl, stock } = item
+    const { title, price, pictureUrl, stock } = item
     const [goToCart, setGoToCart] = useState(false)
-    const { addProductToCart, cartProducts } = useContext(CartContext)
+    const { addProductToCart } = useContext(CartContext)
     const [isLoading, setLoading] = useState(true)
-    
-    // Agregar al carrito
-    const onAdd = (qt) => {
+
+    const Capitalize = str => {
+        if (!str) return ''
+        let lower = str.toLowerCase()
+        return str.charAt(0).toUpperCase() + lower.slice(1)
+    }
+
+    const onAdd = (qt) => {   
         setGoToCart(true)
-        console.log("Cantidad:",qt)
         addProductToCart({...item, quantity: qt})
-        //console.log("Todos los productos agregados:", cartProducts) 
     }
 
     const getItems = () => new Promise((resolve, reject) => {
         return setTimeout( () => {
-            //resolve(MockItem);
             resolve(true);
         }, 2000);
     });
@@ -31,7 +43,6 @@ function ItemDetail({ item }) {
     useEffect( () => {
         setLoading(true)
         getItems().then( () => {
-            console.log("Termino")
         }).finally( () => {
             setLoading(false)
         })
@@ -43,30 +54,80 @@ function ItemDetail({ item }) {
                 <CircularProgress />
             </div> ) 
             : (
-                <div>
-                    <p> {id} </p>
-                    <h2> {title} </h2>
-                    <p> {description} </p>
-                    <p>Precio : {price} </p>
-                    <img src={`../img/${pictureUrl}`} alt={pictureUrl} width="300"/>
+                <Paper>
+                    <Box p={5}>
+                        <Grid container justifyContent='center' spacing={5}>
+                            <Grid item xs={12} sm={3}>
+                                <CardMedia
+                                    sx={{ maxWidth: 300 }}
+                                    component='img'
+                                    image={`../img/${pictureUrl}`}
+                                    title={pictureUrl}
+                                />
+                            </Grid>
+                            <Grid
+                                container
+                                item
+                                direction='column'
+                                spacing={2}
+                                xs={12}
+                                sm={3}>
+                                    <Grid item>
+                                        <Typography
+                                            variant='h6'>
+                                            {title}
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item>
+                                        <Typography
+                                            variant='h4'>
+                                            ${price}
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item>
+                                        <Typography
+                                            variant='subtitle2'>
+                                            {stock === 0
+                                                ? 'Sin stock'
+                                                : 'Stock disponible: ' + stock}
+                                        </Typography>
+                                    </Grid>
+                                    <Grid
+                                        item
+                                        container
+                                        alignItems='center'
+                                        spacing={2}>
 
-                    {!goToCart 
-                    ?
-                    <div>
-                        <ItemCount stock={stock} initial={1} onAdd={onAdd}/>
-                    </div>
-                    :
-                    <div>
-                        <Link to={`/carrito`}> 
-                            <button> Terminar mi compra </button>   
-                        </Link>    
+                                        {!goToCart ?
+                                            <ItemCount stock={stock} initial={1} onAdd={onAdd}/>
+                                        :
+                                        <Grid item xs={12}>
+                                        <Link to={'/carrito'} style={{ textDecoration: 'none' }}>
+                                            <Button
+                                                variant='outlined'
+                                                color='secondary'
+                                                disableElevation
+                                                fullWidth>
+                                                Terminar mi compra
+                                            </Button>
+                                        </Link>
+                                        <Link to={'/productos'} style={{ textDecoration: 'none' }}>
+                                            <ColorButton 
+                                                variant='outlined'
+                                                color='secondary'
+                                                disableElevation
+                                                fullWidth>
+                                                {'Seguir comprando'}
+                                            </ColorButton >
+                                        </Link>
+                                    </Grid> }   
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Box>
+                </Paper>
 
-                        <Link to={`/productos`}>   
-                            <button> Seguir comprando </button>  
-                        </Link>   
-                    </div>       
-                    }
-                </div>
+
             )) 
    }
   

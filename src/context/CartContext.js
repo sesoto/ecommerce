@@ -4,17 +4,14 @@ import React from "react";
 const CartContext = createContext();
 
 const CartProvider = ({children}) => {
-    const [cartProducts, setCartProducts] = useState([])
 
-    console.log({cartProducts})
+    const [cartProducts, setCartProducts] = useState(JSON.parse(localStorage.getItem("cart")) || []);
 
     const addProductToCart = (product) => {
         
-        // let existe = cartProducts.find(cartProduct => cartProduct.id === product.id)
-
         if(!isInCart(product.id)){
-            // console.log("Producto a agregar:", product)
-            return setCartProducts(cartProducts => [...cartProducts, product])
+            setCartProducts(cartProducts => [...cartProducts, product]);
+            localStorage.setItem("cart", JSON.stringify([...cartProducts, product]));
         } else {
 
             const prod = cartProducts.find((p) => p.id === product.id);
@@ -23,17 +20,21 @@ const CartProvider = ({children}) => {
             prod.quantity = product.quantity + quantity;
             const newCart = [ ...cartProducts ];
             setCartProducts(newCart);
+
+            localStorage.setItem("cart", JSON.stringify(newCart));
         }
+        
     }
 
     const removeItem = (id) => {
-        console.log("Remove item")
         setCartProducts(cartProducts.filter(p => p.id !== id));
+        const newCart2 = cartProducts.filter(p => p.id !== id) ;
+        localStorage.setItem("cart", JSON.stringify(newCart2));
     }
 
     const clear = () => {
         setCartProducts([])
-        console.log("Clear carrito")
+        localStorage.clear()
     }
 
     const isInCart = (id) => {
